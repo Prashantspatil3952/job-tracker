@@ -1,6 +1,18 @@
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  "http://localhost:5000/api";
+const isLocalDevelopment =
+  window.location.hostname ===
+    "localhost" ||
+  window.location.hostname ===
+    "127.0.0.1";
+
+const API_URL = isLocalDevelopment
+  ? "/api"
+  : import.meta.env.VITE_API_URL ||
+    "/api";
+
+console.log(
+  "JobTracker API URL:",
+  API_URL
+);
 
 async function request(
   endpoint,
@@ -9,26 +21,39 @@ async function request(
   const token =
     localStorage.getItem("token");
 
-  const response = await fetch(
-    `${API_URL}${endpoint}`,
-    {
-      ...options,
+  let response;
 
-      headers: {
-        "Content-Type":
-          "application/json",
+  try {
+    response = await fetch(
+      `${API_URL}${endpoint}`,
+      {
+        ...options,
 
-        ...(token
-          ? {
-              Authorization:
-                `Bearer ${token}`,
-            }
-          : {}),
+        headers: {
+          "Content-Type":
+            "application/json",
 
-        ...(options.headers || {}),
-      },
-    }
-  );
+          ...(token
+            ? {
+                Authorization:
+                  `Bearer ${token}`,
+              }
+            : {}),
+
+          ...(options.headers || {}),
+        },
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Network request failed:",
+      error
+    );
+
+    throw new Error(
+      `Cannot connect to JobTracker API: ${API_URL}${endpoint}`
+    );
+  }
 
   const data =
     await response
@@ -41,7 +66,8 @@ async function request(
         "Something went wrong"
     );
 
-    error.status = response.status;
+    error.status =
+      response.status;
 
     throw error;
   }
@@ -109,7 +135,9 @@ export async function getJob(id) {
   return request(`/jobs/${id}`);
 }
 
-export async function createJob(jobData) {
+export async function createJob(
+  jobData
+) {
   return request("/jobs", {
     method: "POST",
     body: JSON.stringify(jobData),
@@ -130,4 +158,33 @@ export async function deleteJob(id) {
   return request(`/jobs/${id}`, {
     method: "DELETE",
   });
+}
+
+
+export async function forgotPassword(
+  email
+) {
+  return request(
+    "/auth/forgot-password",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+      }),
+    }
+  );
+}
+
+export async function resetPassword(
+  resetData
+) {
+  return request(
+    "/auth/reset-password",
+    {
+      method: "POST",
+      body: JSON.stringify(
+        resetData
+      ),
+    }
+  );
 }

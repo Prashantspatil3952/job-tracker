@@ -4,9 +4,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import {
-  loginUser,
-} from "../services/api";
+import { loginUser } from "../services/api";
 
 function Login() {
   const navigate = useNavigate();
@@ -36,13 +34,12 @@ function Login() {
     setLoading(true);
 
     try {
-      const data =
-        await loginUser({
-          email: email
-            .trim()
-            .toLowerCase(),
-          password,
-        });
+      const data = await loginUser({
+        email: email
+          .trim()
+          .toLowerCase(),
+        password,
+      });
 
       localStorage.setItem(
         "token",
@@ -137,6 +134,24 @@ function Login() {
               : "Login"}
           </button>
         </form>
+
+        {/* FORGOT PASSWORD */}
+        <p
+          style={{
+            marginTop: "16px",
+          }}
+        >
+          <Link
+            to="/forgot-password"
+            style={{
+              color: "#2563eb",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+          >
+            Forgot Password?
+          </Link>
+        </p>
 
         <p>
           Don't have an account?{" "}
