@@ -14,7 +14,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/dashboard" className="logo">
-          JobTracker
+          AI Job Tracker
         </Link>
 
         <div className="nav-links">
