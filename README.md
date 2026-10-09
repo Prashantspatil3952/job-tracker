@@ -1,172 +1,86 @@
-# JobTracker
+# AI JobTracker
 
-A full-stack job application tracker that helps users manage, organize, and monitor their job search from one place.
-
-JobTracker provides secure user authentication, email verification, protected APIs, and complete job application management with status tracking.
+An AI-powered job application tracker that helps users organize their job search, analyze resumes, match resumes with job descriptions, and track application progress in one place.
 
 ## Features
 
-- User registration and secure login
-- Password hashing with `bcryptjs`
-- 6-digit email verification OTP
-- OTP expiration and resend functionality
-- Email delivery with Brevo Transactional Email API
-- JWT-based authentication
-- Protected React routes and REST API endpoints
-- User-specific job application data
-- Create, view, edit, and delete job applications
-- Application status tracking
-- Dashboard summary and application statistics
-- Responsive React UI
-- MongoDB Atlas persistence
-- Environment-based configuration for sensitive credentials
+### AI-Powered Tools
 
-## Job Statuses
+* **AI Resume Analyzer** — Analyze resume content and receive a resume score, summary, strengths, and areas for improvement.
+* **AI Job Matcher** — Compare resume content with a job description to identify matching skills and missing keywords.
+* **Resume Improvement Suggestions** — Get practical recommendations to improve resume quality and ATS readability.
 
-- `Applied`
-- `Interview`
-- `Selected`
-- `Rejected`
+### Job Application Management
+
+* Create, view, edit, and delete job applications.
+* Track application statuses: Applied, Interview, Selected, and Rejected.
+* View dashboard summaries and application statistics.
+* Keep job application data associated with individual users.
+
+### Authentication and Security
+
+* Secure user registration and login.
+* Password hashing with `bcryptjs`.
+* Six-digit email verification OTP.
+* OTP expiration and resend functionality.
+* JWT-based authentication and protected routes.
+* User-specific job application data.
+
+### Other Features
+
+* Email delivery using Brevo Transactional Email API.
+* MongoDB Atlas database integration.
+* Responsive React interface.
+* Environment-based configuration for credentials.
 
 ## Tech Stack
 
-| Layer | Technologies |
-|---|---|
-| Frontend | React, JavaScript, React Router, Vite, HTML, CSS |
-| Backend | Node.js, Express.js, Mongoose, JWT, bcryptjs, CORS, dotenv |
-| Database | MongoDB Atlas |
-| Email | Brevo Transactional Email API |
-| Deployment | Vercel, Render |
+| Layer          | Technologies                                     |
+| -------------- | ------------------------------------------------ |
+| Frontend       | React, JavaScript, React Router, Vite, HTML, CSS |
+| Backend        | Node.js, Express.js, Mongoose                    |
+| Authentication | JWT, bcryptjs                                    |
+| Database       | MongoDB Atlas                                    |
+| AI Integration | Google Gemini API                                |
+| Email          | Brevo Transactional Email API                    |
+| Deployment     | Vercel, Render                                   |
 
-## Application Flow
-
-### Authentication
-
-```text
-Register
-   ↓
-Create User
-   ↓
-Hash Password with bcrypt
-   ↓
-Generate Verification OTP
-   ↓
-Send OTP by Email
-   ↓
-Verify OTP
-   ↓
-Email Verified
-   ↓
-Login
-   ↓
-Generate JWT
-   ↓
-Access Protected Dashboard
-```
-
-### Job Management
+## Application Architecture
 
 ```text
-Login
-   ↓
-JWT Token
-   ↓
-Dashboard
-   ↓
-Add / View / Edit / Delete Job
-   ↓
-Protected REST API
-   ↓
-MongoDB Atlas
+React + Vite Frontend
+       (Vercel)
+          |
+          | REST API / HTTPS
+          v
+Node.js + Express Backend
+        (Render)
+       /     |      \
+      v      v       v
+ MongoDB   Gemini   Brevo
+  Atlas     API      Email
 ```
 
-## Architecture
+## Live Demo
 
-```text
-                    React + Vite
-                     Frontend
-                      (Vercel)
-                         │
-                         │ REST API / HTTPS
-                         ▼
-                 Node.js + Express
-                      Backend
-                     (Render)
-                    /         \
-                   /           \
-                  ▼             ▼
-           MongoDB Atlas      Brevo API
-             Database        Email / OTP
-```
-
-## Project Structure
-
-```text
-job-tracker/
-│
-├── backend/
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   └── jobController.js
-│   ├── middleware/
-│   │   └── authMiddleware.js
-│   ├── models/
-│   │   ├── User.js
-│   │   └── Job.js
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   └── jobRoutes.js
-│   ├── services/
-│   │   └── emailService.js
-│   ├── .env
-│   ├── .gitignore
-│   ├── package.json
-│   └── server.js
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── ProtectedRoute.jsx
-│   │   │   └── JobCard.jsx
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── VerifyEmail.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── AddJob.jsx
-│   │   │   └── EditJob.jsx
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── .env
-│   ├── package.json
-│   └── index.html
-│
-├── .gitignore
-├── LICENSE
-├── package.json
-└── README.md
-```
+* **Frontend:** https://job-tracker-alpha-amber.vercel.app
+* **Backend:** https://job-tracker-b1e0.onrender.com
+* **GitHub:** https://github.com/Prashantspatil3952/ai-job-tracker
 
 ## Getting Started
 
 ### Prerequisites
 
-Make sure you have:
+* Node.js and npm
+* MongoDB Atlas account
+* Google Gemini API key
+* Brevo account and verified sender email for email verification
 
-- Node.js installed
-- A MongoDB Atlas database
-- A Brevo account with a verified sender email and API key
-- Git installed
-
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Prashantspatil3952/job-tracker.git
-cd job-tracker
+git clone https://github.com/Prashantspatil3952/ai-job-tracker.git
+cd ai-job-tracker
 ```
 
 ### 2. Configure the Backend
@@ -176,7 +90,7 @@ cd backend
 npm install
 ```
 
-Create `backend/.env`:
+Create a `backend/.env` file and configure the required variables:
 
 ```env
 PORT=5000
@@ -186,30 +100,28 @@ CLIENT_URL=http://localhost:5173
 BREVO_API_KEY=your_brevo_api_key
 BREVO_SENDER_EMAIL=your_verified_sender_email
 BREVO_SENDER_NAME=JobTracker
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=your_supported_gemini_model
 ```
+
+Use the Gemini model configured and supported by your API project.
 
 Start the backend:
 
 ```bash
-node server.js
-```
-
-Backend URL:
-
-```text
-http://localhost:5000
+npm run dev
 ```
 
 ### 3. Configure the Frontend
 
-Open a second terminal:
+Open another terminal:
 
 ```bash
 cd frontend
 npm install
 ```
 
-Create `frontend/.env`:
+Create a `frontend/.env` file:
 
 ```env
 VITE_API_URL=http://localhost:5000/api
@@ -221,156 +133,71 @@ Start the frontend:
 npm run dev
 ```
 
-Frontend URL:
-
-```text
-http://localhost:5173
-```
+Open the local frontend at `http://localhost:5173`.
 
 ## Environment Variables
 
 ### Backend
 
-| Variable | Description |
-|---|---|
-| `PORT` | Port for the Express server |
-| `MONGO_URI` | MongoDB Atlas connection string |
-| `JWT_SECRET` | Secret used to sign JWT tokens |
-| `CLIENT_URL` | Frontend origin allowed by CORS |
-| `BREVO_API_KEY` | Brevo API key used to send verification emails |
-| `BREVO_SENDER_EMAIL` | Verified sender email in Brevo |
-| `BREVO_SENDER_NAME` | Sender display name |
+| Variable             | Purpose                         |
+| -------------------- | ------------------------------- |
+| `PORT`               | Backend server port             |
+| `MONGO_URI`          | MongoDB Atlas connection string |
+| `JWT_SECRET`         | JWT signing secret              |
+| `CLIENT_URL`         | Allowed frontend origin         |
+| `BREVO_API_KEY`      | Brevo email API key             |
+| `BREVO_SENDER_EMAIL` | Verified sender email           |
+| `BREVO_SENDER_NAME`  | Sender display name             |
+| `GEMINI_API_KEY`     | Google Gemini API key           |
+| `GEMINI_MODEL`       | Gemini model identifier         |
 
 ### Frontend
 
-| Variable | Description |
-|---|---|
+| Variable       | Purpose              |
+| -------------- | -------------------- |
 | `VITE_API_URL` | Backend API base URL |
-
-> **Security:** Never commit real credentials, API keys, database connection strings, or JWT secrets to GitHub. Keep them in `.env` locally and configure them as environment variables on your hosting platform.
-
-## REST API
-
-### Authentication
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/api/auth/register` | Create a new user and send a verification OTP |
-| `POST` | `/api/auth/verify-email` | Verify the user's email with the OTP |
-| `POST` | `/api/auth/resend-otp` | Send a new verification OTP |
-| `POST` | `/api/auth/login` | Login and receive a JWT |
-
-### Job Applications
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/jobs` | Get the authenticated user's applications |
-| `GET` | `/api/jobs/:id` | Get one application |
-| `POST` | `/api/jobs` | Create a job application |
-| `PUT` | `/api/jobs/:id` | Update a job application |
-| `DELETE` | `/api/jobs/:id` | Delete a job application |
-
-Protected requests use:
-
-```http
-Authorization: Bearer <JWT_TOKEN>
-```
-
-## Data Models
-
-### User
-
-```text
-name
-email
-password
-isVerified
-verificationOtpHash
-verificationOtpExpiresAt
-createdAt
-updatedAt
-```
-
-### Job
-
-```text
-company
-role
-location
-salary
-status
-applicationDate
-userId
-```
-
-Each job is associated with the authenticated user's `userId`, ensuring application data is scoped to the correct account.
-
-## Security
-
-The application includes:
-
-- Password hashing with `bcryptjs`
-- Hashed verification OTP storage
-- Expiring email verification OTPs
-- JWT authentication with token expiration
-- Protected frontend and backend routes
-- User-scoped database queries for job records
-- CORS configuration through environment variables
-
-For further production hardening, consider adding rate limiting, authentication/OTP attempt throttling, centralized request validation, and secure `HttpOnly` cookie-based JWT storage.
 
 ## Deployment
 
 ### Backend — Render
 
-1. Create a Render Web Service from this repository.
+1. Connect the GitHub repository to a Render Web Service.
 2. Set the root directory to `backend`.
-3. Install dependencies with `npm install`.
-4. Start the service with `node server.js`.
-5. Add all backend environment variables in Render.
+3. Set the build/install command to `npm install`.
+4. Set the start command to `node server.js`.
+5. Configure the backend environment variables in Render.
 6. Set `CLIENT_URL` to the deployed frontend URL.
+7. Deploy and verify the service logs.
 
 ### Frontend — Vercel
 
-1. Import the repository into Vercel.
+1. Import the GitHub repository into Vercel.
 2. Set the root directory to `frontend`.
-3. Build command: `npm run build`
-4. Output directory: `dist`
-5. Add `VITE_API_URL` pointing to the deployed backend API.
-6. Configure a SPA rewrite so React Router routes work on direct navigation and page refresh.
+3. Set the build command to `npm run build`.
+4. Set the output directory to `dist`.
+5. Set `VITE_API_URL` to the deployed backend API URL, including `/api`.
+6. Deploy and test the live application.
 
-Example `frontend/vercel.json`:
+## Security
 
-```json
-{
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
-}
-```
-
-## Demo & Repository
-
-- **Frontend:** https://job-tracker-alpha-amber.vercel.app
-- **Backend:** https://job-tracker-b1e0.onrender.com
-- **GitHub:** https://github.com/Prashantspatil3952/job-tracker
+* Never commit `.env` files or real API keys to GitHub.
+* Store production secrets in Render environment variables.
+* Configure CORS for trusted frontend origins.
+* Use strong JWT secrets and protect authenticated endpoints.
+* Restrict database access and keep MongoDB credentials private.
 
 ## Future Improvements
 
-- Automated unit and API testing
-- Search, filtering, and pagination
-- Job notes and recruiter information
-- Interview date and reminder support
-- Password reset and account recovery
-- Rate limiting and stronger authentication controls
-- CI/CD with GitHub Actions
+* Automated unit and API tests.
+* Job search, filtering, and pagination.
+* Interview reminders and application notes.
+* Resume file upload and parsing.
+* Improved AI job recommendations.
+* Rate limiting and additional security hardening.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Author
 
