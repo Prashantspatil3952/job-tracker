@@ -188,3 +188,25 @@ export async function resetPassword(
     }
   );
 }
+
+// AI Resume Analyzer
+export async function analyzeResume(resumeText) {
+  return request("/ai/resume/analyze", {
+    method: "POST",
+    body: JSON.stringify({ resumeText }),
+  });
+}
+
+// Job Description Matcher
+export async function matchJobDescription(
+  resumeText,
+  jobDescription
+) {
+  return request("/ai/job-match", {
+    method: "POST",
+    body: JSON.stringify({
+      resumeText,
+      jobDescription,
+    }),
+  });
+}

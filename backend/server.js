@@ -6,6 +6,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const jobRoutes = require("./routes/jobRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 
@@ -75,6 +76,7 @@ app.use(
   "/api/jobs",
   jobRoutes
 );
+app.use("/api/ai", aiRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

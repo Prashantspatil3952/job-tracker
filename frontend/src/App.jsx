@@ -17,6 +17,9 @@ import Dashboard from "./pages/Dashboard";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/EditJob";
 
+import AIResumeAnalyzer from "./pages/AIResumeAnalyzer";
+import JobMatcher from "./pages/JobMatcher";
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,12 +28,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
-          }
+          element={<Navigate to="/dashboard" replace />}
         />
 
         <Route
@@ -81,13 +79,26 @@ function App() {
         />
 
         <Route
-          path="*"
+          path="/ai-resume-analyzer"
           element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
+            <ProtectedRoute>
+              <AIResumeAnalyzer />
+            </ProtectedRoute>
           }
+        />
+
+        <Route
+          path="/job-matcher"
+          element={
+            <ProtectedRoute>
+              <JobMatcher />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={<Navigate to="/dashboard" replace />}
         />
       </Routes>
     </BrowserRouter>
